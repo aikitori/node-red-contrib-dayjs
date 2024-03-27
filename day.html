@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('day.js',{
+        category: 'function',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+            outputFormat: {value:"ISOString"},
+            costumFormatOutput: {value:"YYYY-MM-DDTHH:mm:ssZ"},
+            outputTimezone:{value:"utc"},
+            inputProperty:{value:"payload"},
+            outputProperty:{value:"payload"}
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "file.svg",
+        label: function() {
+            return this.name||"day.js";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="day.js">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+
+<h4>Input</h4>
+
+<div class="form-row">
+    <label for="node-input-inputProperty"><i class="fa fa-tag"></i> input Property</label>
+    <input type="text" id="node-input-inputProperty" placeholder="payload">
+</div>
+
+
+<h4>Output</h4>   
+
+<div class="form-row">
+    <label for="node-input-outputProperty"><i class="fa fa-tag"></i> Output Property</label>
+    <input type="text" id="node-input-outputProperty" placeholder="payload">
+</div>
+
+    <div class="form-row">
+        <label for="node-input-outputFormat"><i class="fa fa-tag"></i>  Type</label>
+        <select type="text" id="node-input-outputFormat" style="width: 70%">
+            <option value="ISOString">ISOString</option>
+            <option value="Date">Javascript Date</option>
+            <option value="Array">Array</option>
+            <option value="Object">Object</option>
+            <option value="Costum">Costum Format String</option>
+        </select>
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-outputTimezone"><i class="fa fa-tag"></i> Output Timezone</label>
+        <input type="text" id="node-input-outputTimezone" placeholder="utc">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-costumFormatOutput"><i class="fa fa-tag"></i> Output Format</label>
+        <input type="text" id="node-input-costumFormatOutput" placeholder="YYYY-MM-DDTHH:mm:ssZ">
+    </div>
+
+
+</script>
+
+<script type="text/html" data-help-name="day.js">
+    <p>A wrapper Node for day.js</p>
+</script>

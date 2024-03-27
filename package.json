@@ -1,0 +1,31 @@
+{
+  "name": "node-red-contrib-dayjs",
+  "version": "0.0.1",
+  "description": "Wrapper of dayjs for Node-RED",
+  "main": "day.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aikitori/node-red-contrib-dayjs.git"
+  },
+  "keywords": [
+    "node-red",
+    "dayjs"
+  ],
+  "author": "aikitori",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aikitori/node-red-contrib-dayjs/issues"
+  },
+  "homepage": "https://github.com/aikitori/node-red-contrib-dayjs#readme",
+  "node-red": {
+    "nodes": {
+      "day.js": "day.js"
+    }
+  },
+  "dependencies": {
+    "dayjs": "^1.11.10"
+  }
+}
