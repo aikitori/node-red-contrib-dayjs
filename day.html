@@ -1,18 +1,21 @@
 <script type="text/javascript">
     RED.nodes.registerType('day.js',{
-        category: 'function',
-        color: '#a6bbcf',
+        category: 'parser',
+        color: '#FF5F4C',
         defaults: {
             name: {value:""},
             outputFormat: {value:"ISOString"},
             costumFormatOutput: {value:"YYYY-MM-DDTHH:mm:ssZ"},
             outputTimezone:{value:"utc"},
             inputProperty:{value:"payload"},
-            outputProperty:{value:"payload"}
+            outputProperty:{value:"payload"},
+            manipulateOperation:{value:""},
+            manipulateUnit:{value:""},
+            manipulateAmount:{value:""}
         },
         inputs: 1,
         outputs: 1,
-        icon: "file.svg",
+        icon: "font-awesome/fa-calendar",
         label: function() {
             return this.name||"day.js";
         }
@@ -33,6 +36,37 @@
     <input type="text" id="node-input-inputProperty" placeholder="payload">
 </div>
 
+<h4>Manipulate</h4>
+<div class="form-row">
+    <label for="node-input-manipulateOperation"><i class="fa fa-ellipsis-h"></i> Operation</label>
+    <select type="text" id="node-input-manipulateOperation" style="width: 70%">
+        <option value=""></option>
+        <option value="add">Add</option>
+        <option value="subtract">Subtract</option>
+        <option value="startOf">Start of Time</option>
+        <option value="endOf">End of Time</option>
+    </select>
+</div>
+<div class="form-row">
+<label for="node-input-manipulateUnit"><i class="fa fa-ellipsis-h"></i> Unit</label>
+<select type="text" id="node-input-manipulateUnit" style="width: 70%">
+    <option value=""></option>
+    <option value="year">Year</option>
+    <option value="quarter">Quarter</option>
+    <option value="month">Month</option>
+    <option value="week">Week</option>
+    <option value="isoWeek">Iso-Week</option>
+    <option value="day">Day</option>
+    <option value="hour">Hour</option>
+    <option value="minute">Minute</option>
+    <option value="second">Second</option>
+</select>
+</div>
+
+<div class="form-row">
+    <label for="node-input-manipulateAmount"><i class="fa fa-ellipsis-h"></i> Amount</label>
+    <input type="text" id="node-input-manipulateAmount" placeholder="0">
+</div>
 
 <h4>Output</h4>   
 

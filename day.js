@@ -20,6 +20,9 @@ module.exports = function(RED) {
         this.outputTimezone = config.outputTimezone || 'utc';
         this.inputProperty = config.inputProperty || 'payload'
         this.outputProperty = config.outputProperty || 'payload'
+        this.manipulateOperation = config.manipulateOperation
+        this.manipulateUnit = config.manipulateUnit 
+        this.manipulateAmount = config.manipulateAmount
 
         var node = this;
         function parsePayload (payload) {
@@ -60,11 +63,43 @@ module.exports = function(RED) {
         };
 
 
+        function manipulateOutput(input,operation,amount,unit) {
+            switch (operation) {
+                case 'add':
+                    return input.add(parseInt(amount),unit)
+                case 'subtract':
+                    return input.subtract(parseInt(amount),unit)
+                case 'startOf':
+                    return input.startOf(unit)
+                case 'endOf':
+                    return input.endOf(unit)
+
+            }
+            
+        }
+
         node.on('input', function(msg) {
 
-            let day =  parsePayload(msg[node.inputProperty]) || ''
+            let msg_input_property = msg.input || node.inputProperty
+            let msg_output_property = msg.output || node.outputProperty
+
+            let manipulate_operation = msg.operation || node.manipulateOperation
+            let manipulate_unit = msg.unit || node.manipulateUnit
+            let manipulate_Amount = msg.amount || node.manipulateAmount
+            
+            
+
+            let day =  parsePayload(msg_input_property)
             let day_tz = alterTimezone(day,node.outputTimezone,false)
-            msg[node.outputProperty] = formatOutput(day_tz,node.outputFormat,node.costumFormatOutput)
+            let day_output = dayjs()
+
+            if(manipulate_operation != ""  && manipulate_unit != "")  {
+                day_output =  manipulateOutput(day,manipulate_operation,manipulate_Amount,manipulate_unit)
+            } else {
+                day_output = day_tz
+            }
+            
+            msg[msg_output_property] = formatOutput(day_output,node.outputFormat,node.costumFormatOutput)
             node.send(msg);
         });
     }
