@@ -8,7 +8,8 @@ A simple [Node-RED](https://nodered.org/) node which wrapps the JavaScript libra
 To install - either use the manage palette option in the editor, or change to your Node-RED user directory.
 
         cd ~/.node-red
-        npm install node-red-node-{filename}
+        npm install node-red-contrib-dayjs
+
 
 ## Usage
 
