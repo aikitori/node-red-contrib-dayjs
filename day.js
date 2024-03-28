@@ -85,7 +85,7 @@ module.exports = function(RED) {
 
             let manipulate_operation = msg.operation || node.manipulateOperation
             let manipulate_unit = msg.unit || node.manipulateUnit
-            let manipulate_Amount = msg.amount || node.manipulateAmount
+            let manipulate_Amount = msg.amount || node.manipulateAmount || '0'
             
             
 
