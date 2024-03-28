@@ -18,13 +18,19 @@
         icon: "font-awesome/fa-calendar",
         label: function() {
             return this.name||"day.js";
+        },
+        oneditprepare: function() {
+            $("#node-input-inputProperty").typedInput({default:'msg',types:['msg']});
+            $("#node-input-outputProperty").typedInput({default:'msg',types:['msg']});
         }
     });
 </script>
 
 <script type="text/html" data-template-name="day.js">
     <div class="form-row">
-        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <label for="node-input-name"><i class="fa fa-tag"></i>
+            Name
+        </label>
         <input type="text" id="node-input-name" placeholder="Name">
     </div>
 
@@ -32,7 +38,9 @@
 <h4>Input</h4>
 
 <div class="form-row">
-    <label for="node-input-inputProperty"><i class="fa fa-ellipsis-h"></i> Property</label>
+    <label for="node-input-inputProperty"><i class="fa fa-ellipsis-h"></i>
+        <span data-i18n="node-red:common.label.property"></span>
+    </label>
     <input type="text" id="node-input-inputProperty" placeholder="payload">
 </div>
 
@@ -71,7 +79,9 @@
 <h4>Output</h4>   
 
 <div class="form-row">
-    <label for="node-input-outputProperty"><i class="fa fa-ellipsis-h"></i> Property</label>
+    <label for="node-input-outputProperty"><i class="fa fa-ellipsis-h"></i>
+        <span data-i18n="node-red:common.label.property"></span>
+    </label>
     <input type="text" id="node-input-outputProperty" placeholder="payload">
 </div>
 
@@ -111,6 +121,30 @@
         1318781876 <br>
     </code>
     If the Input i not parsable, the current time us used
+    <h3>Manipulate</h3>
+    <h4>Operations</h4>
+    <p>Message Property: <code>msg.operation</code></p>
+        <ul>
+            <li>add</li>
+            <li>subtract</li>
+            <li>startOf</li>
+            <li>endOf</li>
+        </ul>
+    <h4>Units</h4>
+    <p>Message Property: <code>msg.unit</code></p>
+        <ul>
+            <li>year</li>
+            <li>quarter</li>
+            <li>month</li>
+            <li>week</li>
+            <li>isoWeek</li>
+            <li>day</li>
+            <li>hour</li>
+            <li>minute</li>
+            <li>second</li>
+        </ul>
+    <h4>Amount</h4>
+        <p>Message Property: <code>msg.amount</code></p>
     <h3>Output</h3>
     By default, the Output is an ISO String, but i can be changed.<br>
     
