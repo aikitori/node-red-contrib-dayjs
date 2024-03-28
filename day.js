@@ -9,11 +9,13 @@ module.exports = function(RED) {
         var customParseFormat  = require('dayjs/plugin/customParseFormat')
         var toArray = require('dayjs/plugin/toArray')
         var toObject = require('dayjs/plugin/toObject')
+        var relativeTime = require('dayjs/plugin/relativeTime')
         dayjs.extend(utc)
         dayjs.extend(timezone)
         dayjs.extend(customParseFormat)
         dayjs.extend(toArray)
         dayjs.extend(toObject)
+        dayjs.extend(relativeTime)
 
         this.outputFormat =  config.outputFormat || 'ISOString';
         this.costumFormatOutput = config.costumFormatOutput || 'YYYY-MM-DDTHH:mm:ssZ';
@@ -53,6 +55,21 @@ module.exports = function(RED) {
 
                 case 'Object':
                     return input.toObject()
+
+                case 'unix_millis':
+                    return input.valueOf()
+
+                case 'unix':
+                    return input.unix()
+
+                case 'fromNow':
+                    return input.fromNow()
+
+                case 'toNow':
+                    return input.toNow()
+
+                case 'daysInMonth':
+                    return input.daysInMonth()
 
                 case 'Costum':
                     return input.format(costumFormatOutput)
