@@ -10,12 +10,15 @@ module.exports = function(RED) {
         var toArray = require('dayjs/plugin/toArray')
         var toObject = require('dayjs/plugin/toObject')
         var relativeTime = require('dayjs/plugin/relativeTime')
+        var customParseFormat = require('dayjs/plugin/customParseFormat')
         dayjs.extend(utc)
         dayjs.extend(timezone)
         dayjs.extend(customParseFormat)
         dayjs.extend(toArray)
         dayjs.extend(toObject)
         dayjs.extend(relativeTime)
+        dayjs.extend(customParseFormat)
+
 
         this.outputFormat =  config.outputFormat || 'ISOString';
         this.costumFormatOutput = config.costumFormatOutput || 'YYYY-MM-DDTHH:mm:ssZ';
@@ -25,13 +28,20 @@ module.exports = function(RED) {
         this.manipulateOperation = config.manipulateOperation
         this.manipulateUnit = config.manipulateUnit 
         this.manipulateAmount = config.manipulateAmount
+        this.inputFormat = config.inputFormat
 
         var node = this;
-        function parsePayload (payload) {
+        
+        function parsePayload (payload,inputFormat) {
+            if (inputFormat != '') {
+                day = dayjs.utc(payload,inputFormat)
+            } else {
                 day = dayjs.utc(payload);
-                if (!day.isValid()) {
-                    day = dayjs.utc()
-                }
+            }
+
+            if (!day.isValid()) {
+                day = dayjs.utc()
+            }
                 return day
         };
 
@@ -103,10 +113,13 @@ module.exports = function(RED) {
             let manipulate_operation = msg.operation || node.manipulateOperation
             let manipulate_unit = msg.unit || node.manipulateUnit
             let manipulate_Amount = msg.amount || node.manipulateAmount || '0'
-            
+        
             let input = msg[msg_input_property]
+            let inputFormat = msg.inputFormat || node.inputFormat || ''
 
-            let day =  parsePayload(input)
+ 
+            let day =  parsePayload(input,inputFormat)
+           
             let day_tz = alterTimezone(day,node.outputTimezone,false)
             let day_output = dayjs()
 

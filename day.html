@@ -4,6 +4,7 @@
         color: '#E9967A',
         defaults: {
             name: {value:""},
+            inputFormat: {value:""},
             outputFormat: {value:"ISOString"},
             costumFormatOutput: {value:"YYYY-MM-DDTHH:mm:ssZ"},
             outputTimezone:{value:"utc"},
@@ -42,6 +43,13 @@
         <span data-i18n="node-red:common.label.property"></span>
     </label>
     <input type="text" id="node-input-inputProperty" placeholder="payload">
+</div>
+
+<div class="form-row">
+    <label for="node-input-inputFormat"><i class="fa fa-code"></i>
+        Input Format
+    </label>
+    <input type="text" id="node-input-inputFormat" placeholder="">
 </div>
 
 <h4>Manipulate</h4>
