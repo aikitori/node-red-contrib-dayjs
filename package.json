@@ -4,7 +4,7 @@
   "description": "Wrapper of dayjs for Node-RED",
   "main": "day.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha \"test/**/*_spec.js\""
   },
   "repository": {
     "type": "git",
@@ -22,7 +22,7 @@
   "homepage": "https://github.com/aikitori/node-red-contrib-dayjs#readme",
   "engines": {
     "node": ">=14"
-},
+  },
   "node-red": {
     "version": ">=3.0.0",
     "nodes": {
@@ -31,5 +31,11 @@
   },
   "dependencies": {
     "dayjs": "^1.11.10"
+  },
+  "devDependencies": {
+    "mocha": "^10.4.0",
+    "node-red": "^3.1.8",
+    "node-red-node-test-helper": "^0.3.3",
+    "should": "^13.2.3"
   }
 }
