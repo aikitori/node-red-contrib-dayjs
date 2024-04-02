@@ -56,6 +56,35 @@ describe('day.js Node', function () {
   });
 
 
+  it('parse costum input format to ISO 8601', function (done) {
+    var flow = [{ id: "n_day", type: "day.js", name: "dayjs test" ,
+    outputFormat: "ISOString",
+    inputFormat: "YYYY/MM/DD",
+    costumFormatOutput: "YYYY-MM-DDTHH:mm:ssZ",
+    outputTimezone: "utc",
+    inputProperty: "payload",
+    outputProperty: "payload",
+    manipulateOperation: "",
+    manipulateUnit: "",
+    manipulateAmount: "",
+    wires: [["n_helper"]] },
+    { id: "n_helper", type: "helper" }];
+    helper.load(day, flow, function () {
+      var n_helper = helper.getNode("n_helper");
+      var n_day = helper.getNode("n_day");   
+      n_helper.on("input", function (msg) {
+        try {
+          msg.should.have.property('payload', '1970-01-01T00:00:00.000Z');
+          done();
+        } catch(err) {
+          done(err);
+        }
+      });
+      n_day.receive({ payload: '1970/01/01' });
+  });
+});
+
+
   it('add one hour to a timestamp', function (done) {
     var flow = [{ id: "n_day", type: "day.js", name: "dayjs test" ,
     outputFormat: "ISOString",
@@ -84,7 +113,7 @@ describe('day.js Node', function () {
 });
 
 
-it('output Costum Format', function (done) {
+it('output costum format', function (done) {
     var flow = [{ id: "n_day", type: "day.js", name: "dayjs test" ,
     outputFormat: "Costum",
     costumFormatOutput: "YYYY-MM",
