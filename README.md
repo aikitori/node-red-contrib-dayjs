@@ -2,58 +2,58 @@
 
 *Under development*
 
-A simple [Node-RED](https://nodered.org/) node which wrapps the JavaScript library [Day.js](https://day.js.org/en/), an alternative to Moment.js
+A simple [Node-RED](https://nodered.org/) node that integrates the versatile JavaScript library [Day.js](https://day.js.org/en/), offering an alternative to Moment.js.
 
 ## Install
-To install - either use the manage palette option in the editor, or change to your Node-RED user directory.
+You can install this node via the manage palette option in the Node-RED editor or by navigating to your Node-RED user directory and running:
 
-        cd ~/.node-red
-        npm install node-red-contrib-dayjs
-
+```bash
+cd ~/.node-red
+npm install node-red-contrib-dayjs
+```
 
 ## Usage
 
-<h3>Input</h3>
-Expect a parsable String:
-<code>
+### Input
+This node expects a parsable string in the following formats:
 
-    '2018-04-04T16:00:00.000Z'
-    '2018-04-13 19:18:17.040+02:00'
-    '2018-04-13 19:18'
-    1318781876406
-    1318781876
-</code>
-If the Input i not parsable, the current time us used
-<h3>Manipulate</h3>
-<h4>Operations</h4>
-<p>Message Property: <code>msg.operation</code></p>
-    <ul>
-        <li>add</li>
-        <li>subtract</li>
-        <li>startOf</li>
-        <li>endOf</li>
-    </ul>
-<h4>Units</h4>
-<p>Message Property: <code>msg.unit</code></p>
-    <ul>
-        <li>year</li>
-        <li>quarter</li>
-        <li>month</li>
-        <li>week</li>
-        <li>isoWeek</li>
-        <li>day</li>
-        <li>hour</li>
-        <li>minute</li>
-        <li>second</li>
-    </ul>
-<h4>Amount</h4>
-    <p>Message Property: <code>msg.amount</code></p>
-<h3>Output</h3>
-By default, the Output is an ISO String, but i can be changed.<br>
+```
+'2018-04-04T16:00:00.000Z'
+'2018-04-13 19:18:17.040+02:00'
+'2018-04-13 19:18'
+1318781876406
+1318781876
+```
+If the input is not parsable, the current time is used.
 
-You can also set a Costum Output Format (<a href="https://day.js.org/docs/en/display/format">Format Options</a>)
+### Manipulate
 
-You can also change the Timezone (e.g. 'utc', 'Europe/Paris')
+#### Operations
+The operation to perform is specified via the `msg.operation` property, which supports the following options:
+- add
+- subtract
+- startOf
+- endOf
+
+#### Units
+Specify the unit of time using the `msg.unit` property, which can take the values:
+- year
+- quarter
+- month
+- week
+- isoWeek
+- day
+- hour
+- minute
+- second
+
+#### Amount
+The amount of time to manipulate is provided via the msg.amount property.
+
+### Output
+By default, the output is provided as an ISO String, but it can be customized. You can also specify a custom output format using the ([Format Options](https://day.js.org/docs/en/display/format)).
+
+Additionally, you can adjust the timezone (e.g., 'utc', 'Europe/Paris')).
 
 ## Example
 
