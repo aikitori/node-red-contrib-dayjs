@@ -9,6 +9,7 @@
             costumFormatOutput: {value:"YYYY-MM-DDTHH:mm:ssZ"},
             outputTimezone:{value:"utc"},
             inputProperty:{value:"payload"},
+            inputReferenceProperty:{value:"reference",required:false},
             outputProperty:{value:"payload"},
             manipulateOperation:{value:""},
             manipulateUnit:{value:""},
@@ -22,6 +23,7 @@
         },
         oneditprepare: function() {
             $("#node-input-inputProperty").typedInput({default:'msg',types:['msg']});
+            $("#node-input-inputReferenceProperty").typedInput({default:'msg',types:['msg']});
             $("#node-input-outputProperty").typedInput({default:'msg',types:['msg']});
         }
     });
@@ -43,6 +45,13 @@
         <span data-i18n="node-red:common.label.property"></span>
     </label>
     <input type="text" id="node-input-inputProperty" placeholder="payload">
+</div>
+
+<div class="form-row">
+    <label for="node-input-inputReferenceProperty"><i class="fa fa-ellipsis-h"></i>
+        Reference
+    </label>
+    <input type="text" id="node-input-inputReferenceProperty" placeholder="reference">
 </div>
 
 <div class="form-row">
@@ -106,6 +115,12 @@
             <option value="toNow">Time to now</option>
             <option value="daysInMonth">Days in Month</option>
             <option value="Costum">Costum Format String</option>
+            <option value="isBefore">Is Before</option>
+            <option value="isSame">Is Same</option>
+            <option value="isAfter">Is After</option>
+            <option value="isSameOrBefore">Is Same or Before</option>
+            <option value="isSameOrAfter">Is Same or After</option>
+            <option value="isBetween">Is Between</option>
         </select>
     </div>
 
@@ -134,6 +149,11 @@
         1318781876 <br>
     </code>
     If the Input i not parsable, the current time us used
+
+    <p>The reference is used for the Output type 'Is X'. For the Operation 'Is Between', an array of the size two is needed!
+    If msg.reference is not set, the current time is used.</p>
+
+
     <h3>Manipulate</h3>
     <h4>Operations</h4>
     <p>Message Property: <code>msg.operation</code></p>
@@ -164,4 +184,6 @@
     You can also set a Costum Output Format (<a href="https://day.js.org/docs/en/display/format">Format Options</a>)
    
     You can also change the Timezone (e.g. 'utc', 'Europe/Paris')
+
+
 </script>

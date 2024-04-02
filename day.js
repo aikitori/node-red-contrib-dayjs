@@ -11,6 +11,9 @@ module.exports = function(RED) {
         var toObject = require('dayjs/plugin/toObject')
         var relativeTime = require('dayjs/plugin/relativeTime')
         var customParseFormat = require('dayjs/plugin/customParseFormat')
+        var isSameOrBefore = require('dayjs/plugin/isSameOrBefore')
+        var isSameOrAfter = require('dayjs/plugin/isSameOrAfter')
+        var isBetween = require('dayjs/plugin/isBetween')
         dayjs.extend(utc)
         dayjs.extend(timezone)
         dayjs.extend(customParseFormat)
@@ -18,12 +21,15 @@ module.exports = function(RED) {
         dayjs.extend(toObject)
         dayjs.extend(relativeTime)
         dayjs.extend(customParseFormat)
-
+        dayjs.extend(isSameOrBefore)
+        dayjs.extend(isSameOrAfter)
+        dayjs.extend(isBetween)
 
         this.outputFormat =  config.outputFormat || 'ISOString';
         this.costumFormatOutput = config.costumFormatOutput || 'YYYY-MM-DDTHH:mm:ssZ';
         this.outputTimezone = config.outputTimezone || 'utc';
         this.inputProperty = config.inputProperty || 'payload'
+        this.inputReferenceProperty = config.inputReferenceProperty || 'reference'
         this.outputProperty = config.outputProperty || 'payload'
         this.manipulateOperation = config.manipulateOperation
         this.manipulateUnit = config.manipulateUnit 
@@ -31,18 +37,40 @@ module.exports = function(RED) {
         this.inputFormat = config.inputFormat
 
         var node = this;
-        
+
         function parsePayload (payload,inputFormat) {
-            if (inputFormat != '') {
-                day = dayjs.utc(payload,inputFormat)
+
+            if (Array.isArray(payload)) {
+                for (let index = 0; index < payload.length; index++) {
+                    const element = payload[index];
+                        if (inputFormat != '') {
+                            day = dayjs.utc(payload[index],inputFormat)
+                        } else {
+                            day = dayjs.utc(payload[index]);
+                        }
+                        if (!day.isValid()) {
+                            payload[index] = dayjs.utc()
+                        } else {
+                            payload[index] = day
+                        }
+
+                    }     
+                    return payload               
             } else {
-                day = dayjs.utc(payload);
+                if (inputFormat != '') {
+                    day = dayjs.utc(payload,inputFormat)
+                } else {
+                    day = dayjs.utc(payload);
+                }
+    
+                if (!day.isValid()) {
+                    day = dayjs.utc()
+                }
+                    return day
             }
 
-            if (!day.isValid()) {
-                day = dayjs.utc()
-            }
-                return day
+
+
         };
 
 
@@ -51,7 +79,7 @@ module.exports = function(RED) {
 
         }
 
-        function formatOutput(input, Format,costumFormatOutput) {
+        function formatOutput(input, Format,costumFormatOutput,reference,manipulate_unit) {
 
             switch (Format) {
                 case 'ISOString':
@@ -83,6 +111,19 @@ module.exports = function(RED) {
 
                 case 'Costum':
                     return input.format(costumFormatOutput)
+                case 'isBefore':
+                    return input.isBefore(reference[0] || reference,manipulate_unit)
+                case 'isSame':
+                    return input.isSame(reference[0] || reference,manipulate_unit)
+                case 'isAfter':
+                    return input.isAfter(reference[0] || reference,manipulate_unit)
+                case 'isSameOrBefore':
+                    return input.isSameOrBefore(reference[0] || reference,manipulate_unit)
+                case 'isSameOrAfter':
+                    return input.isSameOrAfter(reference[0] || reference,manipulate_unit)
+                case 'isBetween':
+                    return input.isBetween(reference[0] || reference,reference[1] || reference,manipulate_unit)
+                
 
                 default:
                     return input.toISOString()
@@ -107,18 +148,21 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
 
-            let msg_input_property = msg.input || node.inputProperty
-            let msg_output_property = msg.output || node.outputProperty
+            let input =  msg.input || msg[node.inputProperty]
+            let reference = msg.reference || msg[node.inputReferenceProperty]
+            let msg_output_property = 'output' || node.outputProperty
 
             let manipulate_operation = msg.operation || node.manipulateOperation
             let manipulate_unit = msg.unit || node.manipulateUnit
             let manipulate_Amount = msg.amount || node.manipulateAmount || '0'
         
-            let input = msg[msg_input_property]
+
             let inputFormat = msg.inputFormat || node.inputFormat || ''
 
  
             let day =  parsePayload(input,inputFormat)
+            let day_reference = parsePayload(reference)
+
            
             let day_tz = alterTimezone(day,node.outputTimezone,false)
             let day_output = dayjs()
@@ -128,8 +172,7 @@ module.exports = function(RED) {
             } else {
                 day_output = day_tz
             }
-            
-            msg[msg_output_property] = formatOutput(day_output,node.outputFormat,node.costumFormatOutput)
+            msg[msg_output_property] = formatOutput(day_output,node.outputFormat,node.costumFormatOutput,day_reference,manipulate_unit)
             node.send(msg);
         });
     }
