@@ -104,9 +104,9 @@ module.exports = function(RED) {
             let manipulate_unit = msg.unit || node.manipulateUnit
             let manipulate_Amount = msg.amount || node.manipulateAmount || '0'
             
-            
+            let input = msg[msg_input_property]
 
-            let day =  parsePayload(msg_input_property)
+            let day =  parsePayload(input)
             let day_tz = alterTimezone(day,node.outputTimezone,false)
             let day_output = dayjs()
 
