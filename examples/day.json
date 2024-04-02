@@ -147,7 +147,7 @@
         "manipulateUnit": "",
         "manipulateAmount": "",
         "x": 310,
-        "y": 240,
+        "y": 260,
         "wires": [
             [
                 "c194c9a3421a3c9c"
@@ -168,7 +168,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 500,
-        "y": 240,
+        "y": 260,
         "wires": []
     },
     {
@@ -208,7 +208,7 @@
         "payload": "0",
         "payloadType": "num",
         "x": 130,
-        "y": 240,
+        "y": 260,
         "wires": [
             [
                 "ee39f418a0931e8f"
@@ -232,7 +232,7 @@
         "name": "Use Message Propertys",
         "info": "",
         "x": 200,
-        "y": 200,
+        "y": 220,
         "wires": []
     },
     {
@@ -240,6 +240,7 @@
         "type": "day.js",
         "z": "9cae056a37834fb0",
         "name": "",
+        "inputFormat": "",
         "outputFormat": "ISOString",
         "costumFormatOutput": "YYYY-MM-DDTHH:mm:ssZ",
         "outputTimezone": "utc",
@@ -249,7 +250,7 @@
         "manipulateUnit": "",
         "manipulateAmount": "",
         "x": 310,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "0262e07e52807793"
@@ -270,7 +271,7 @@
         "statusVal": "",
         "statusType": "auto",
         "x": 500,
-        "y": 280,
+        "y": 300,
         "wires": []
     },
     {
@@ -305,10 +306,151 @@
         "payload": "0",
         "payloadType": "num",
         "x": 130,
-        "y": 280,
+        "y": 300,
         "wires": [
             [
                 "eb470f0451bc356c"
+            ]
+        ]
+    },
+    {
+        "id": "e83624d1aa077cca",
+        "type": "day.js",
+        "z": "9cae056a37834fb0",
+        "name": "",
+        "inputFormat": "YYYY/MM/DD",
+        "outputFormat": "ISOString",
+        "costumFormatOutput": "YYYY-MM-DDTHH:mm:ssZ",
+        "outputTimezone": "utc",
+        "inputProperty": "payload",
+        "outputProperty": "payload",
+        "manipulateOperation": "",
+        "manipulateUnit": "",
+        "manipulateAmount": "",
+        "x": 310,
+        "y": 160,
+        "wires": [
+            [
+                "f4e3bffcb9d9f16f"
+            ]
+        ]
+    },
+    {
+        "id": "f4e3bffcb9d9f16f",
+        "type": "debug",
+        "z": "9cae056a37834fb0",
+        "name": "debug 8",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "dbfe88fa3b77229d",
+        "type": "inject",
+        "z": "9cae056a37834fb0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1970/01/01",
+        "payloadType": "str",
+        "x": 150,
+        "y": 160,
+        "wires": [
+            [
+                "e83624d1aa077cca"
+            ]
+        ]
+    },
+    {
+        "id": "1f7eafcf22d496a1",
+        "type": "day.js",
+        "z": "9cae056a37834fb0",
+        "name": "",
+        "inputFormat": "",
+        "outputFormat": "ISOString",
+        "costumFormatOutput": "YYYY-MM-DDTHH:mm:ssZ",
+        "outputTimezone": "utc",
+        "inputProperty": "payload",
+        "outputProperty": "payload",
+        "manipulateOperation": "",
+        "manipulateUnit": "",
+        "manipulateAmount": "",
+        "x": 310,
+        "y": 340,
+        "wires": [
+            [
+                "e7d21706c3f702cb"
+            ]
+        ]
+    },
+    {
+        "id": "e7d21706c3f702cb",
+        "type": "debug",
+        "z": "9cae056a37834fb0",
+        "name": "debug 9",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 500,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d285e7f73d804231",
+        "type": "inject",
+        "z": "9cae056a37834fb0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            },
+            {
+                "p": "inputFormat",
+                "v": "YYYY/MM/DD",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "1970/01/01",
+        "payloadType": "str",
+        "x": 150,
+        "y": 340,
+        "wires": [
+            [
+                "1f7eafcf22d496a1"
             ]
         ]
     }
