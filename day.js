@@ -29,10 +29,11 @@ module.exports = function(RED) {
         this.manipulateUnit = config.manipulateUnit 
         this.manipulateAmount = config.manipulateAmount
         this.inputFormat = config.inputFormat
+        this.inputTimezone = config.inputTimezone
 
         var node = this;
         
-        function parsePayload (payload,inputFormat) {
+        function parsePayload (payload,inputFormat,tz) {
             // parse the payload to a day.js instance
             // if payload is not parsable, the current timestamp is used
             if (inputFormat != '') {
@@ -44,7 +45,12 @@ module.exports = function(RED) {
             if (!day.isValid()) {
                 day = dayjs.utc()
             }
+            if (tz != '') {
+                return day.tz(tz,true)
+            } else {
                 return day
+            }
+                
         };
 
 
@@ -124,9 +130,10 @@ module.exports = function(RED) {
             let input = msg[msg_inputProperty]
 
             let inputFormat = msg.inputFormat || node.inputFormat || ''
+            let inputTimezone = msg.inputTimezone || node.inputTimezone || ''
 
             // parse the input
-            let day =  parsePayload(input,inputFormat)
+            let day =  parsePayload(input,inputFormat,inputTimezone)
             
             // alter Timezone for the output
             let day_tz = alterTimezone(day,node.outputTimezone,false)

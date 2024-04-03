@@ -5,6 +5,7 @@
         defaults: {
             name: {value:""},
             inputFormat: {value:""},
+            inputTimezone: {value:""},
             outputFormat: {value:"ISOString"},
             costumFormatOutput: {value:"YYYY-MM-DDTHH:mm:ssZ"},
             outputTimezone:{value:"utc"},
@@ -50,6 +51,13 @@
         Input Format
     </label>
     <input type="text" id="node-input-inputFormat" placeholder="">
+</div>
+
+<div class="form-row">
+    <label for="node-input-inputTimezone"><i class="fa fa-calendar"></i>
+        Input Timezone
+    </label>
+    <input type="text" id="node-input-inputTimezone" placeholder="">
 </div>
 
 <h4>Manipulate</h4>
