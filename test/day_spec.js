@@ -31,6 +31,7 @@ describe('day.js Node', function () {
   it('parse unix timestamp to ISO 8601', function (done) {
       var flow = [{ id: "n_day", type: "day.js", name: "dayjs test" ,
       outputFormat: "ISOString",
+      inputFormat: "",
       costumFormatOutput: "YYYY-MM-DDTHH:mm:ssZ",
       outputTimezone: "utc",
       inputProperty: "payload",
