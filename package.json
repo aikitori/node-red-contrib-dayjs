@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/aikitori/node-red-contrib-dayjs#readme",
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "node-red": {
     "version": ">=3.0.0",
