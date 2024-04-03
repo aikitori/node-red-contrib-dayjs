@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('day.js',{
-        category: 'day.js',
+        category: 'parser',
         color: '#E9967A',
         defaults: {
             name: {value:""},
@@ -18,7 +18,7 @@
         outputs: 1,
         icon: "font-awesome/fa-calendar",
         label: function() {
-            return this.name||"format";
+            return this.name||"day.js";
         },
         oneditprepare: function() {
             $("#node-input-inputProperty").typedInput({default:'msg',types:['msg']});
@@ -106,6 +106,7 @@
             <option value="toNow">Time to now</option>
             <option value="daysInMonth">Days in Month</option>
             <option value="Costum">Costum Format String</option>
+
         </select>
     </div>
 
