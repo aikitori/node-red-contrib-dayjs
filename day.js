@@ -148,10 +148,14 @@ module.exports = function(RED) {
 
         node.on('input', function(msg) {
 
-            let input =  msg.input || msg[node.inputProperty]
-            let reference = msg.reference || msg[node.inputReferenceProperty]
-            let msg_output_property = 'output' || node.outputProperty
+            let inputProperty = node.inputProperty || 'payload'
+            let input =  msg[inputProperty]
 
+            let reference = msg.reference || msg[node.inputReferenceProperty]
+
+            let msg_output_property = node.outputProperty || 'payload'
+
+            
             let manipulate_operation = msg.operation || node.manipulateOperation
             let manipulate_unit = msg.unit || node.manipulateUnit
             let manipulate_Amount = msg.amount || node.manipulateAmount || '0'
