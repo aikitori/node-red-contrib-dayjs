@@ -33,6 +33,8 @@ module.exports = function(RED) {
         var node = this;
         
         function parsePayload (payload,inputFormat) {
+            // parse the payload to a day.js instance
+            // if payload is not parsable, the current timestamp is used
             if (inputFormat != '') {
                 day = dayjs.utc(payload,inputFormat)
             } else {
@@ -47,12 +49,14 @@ module.exports = function(RED) {
 
 
         function alterTimezone (input,tz,local_time) {
+            // alter timezone
+            // TODO: keep time
             return input.tz(tz)
 
         }
 
         function formatOutput(input, Format,costumFormatOutput) {
-
+            // alter ihe input (day.js instance) to the final result
             switch (Format) {
                 case 'ISOString':
                     return input.toISOString()
@@ -91,6 +95,7 @@ module.exports = function(RED) {
 
 
         function manipulateOutput(input,operation,amount,unit) {
+            // change the input day.js instance
             switch (operation) {
                 case 'add':
                     return input.add(parseInt(amount),unit)
@@ -106,29 +111,35 @@ module.exports = function(RED) {
         }
 
         node.on('input', function(msg) {
-
+            // get input - output props eg. 'payload'
             let msg_inputProperty =  msg.input || node.inputProperty
             let msg_output_property = msg.output || node.outputProperty
 
+            // get manipulation options
             let manipulate_operation = msg.operation || node.manipulateOperation
             let manipulate_unit = msg.unit || node.manipulateUnit
             let manipulate_Amount = msg.amount || node.manipulateAmount || '0'
-        
+            
+            // get real payload
             let input = msg[msg_inputProperty]
+
             let inputFormat = msg.inputFormat || node.inputFormat || ''
 
- 
+            // parse the input
             let day =  parsePayload(input,inputFormat)
-           
+            
+            // alter Timezone for the output
             let day_tz = alterTimezone(day,node.outputTimezone,false)
             let day_output = dayjs()
 
+            // if operation and unit is given, we can manipulate the date
             if(manipulate_operation != ""  && manipulate_unit != "")  {
                 day_output =  manipulateOutput(day,manipulate_operation,manipulate_Amount,manipulate_unit)
             } else {
                 day_output = day_tz
             }
             
+            // final output format
             msg[msg_output_property] = formatOutput(day_output,node.outputFormat,node.costumFormatOutput)
             node.send(msg);
         });
